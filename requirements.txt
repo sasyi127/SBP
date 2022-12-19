@@ -4,3 +4,4 @@ streamlit
 Pillow
 flask==2.2.2
 Werkzeug
+pip==22.3.1

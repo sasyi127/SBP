@@ -1,4 +1,6 @@
 # coding=utf-8
+import streamlit as st
+import streamlit.components.v1 as stc
 import os
 import numpy as np
 
@@ -10,13 +12,13 @@ from keras.utils import load_img
 # Flask utils
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
-#from gevent.pywsgi import WSGIServer
+# from gevent.pywsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH ='models/SBPFixed_Model.h5'
+MODEL_PATH = 'models/SBPFixed_Model.h5'
 
 # Load your trained model
 model = load_model(MODEL_PATH)
@@ -28,31 +30,31 @@ def model_predict(img_path, model):
     # Preprocessing the image
     x = img_to_array(img)
     x = np.expand_dims(x, axis=0)
-   
 
     # Be careful how your trained model deals with the input
     # otherwise, it won't make correct prediction!
 
     preds = model.predict(x)
     preds = np.argmax(preds, axis=1)
-    if preds==0:
-        preds="Ini adalah Cacar Air"
-    elif preds==1:
-        preds="Ini adalah Herpes"
-    elif preds==2:
-        preds="ini adalah Impetigo"
-    elif preds==3:
-        preds="Ini adalah Kurap"
-    elif preds==4:
-        preds="Ini adalah Kutil"
-    elif preds==5:
-        preds="Ini adalah Melanoma"
-    elif preds==6:
-        preds="Ini adalah Psoriasis"
-    elif preds==7:
-        preds="Ini adalah Vitiligo"
+    if preds == 0:
+        preds = "Ini adalah Cacar Air"
+    elif preds == 1:
+        preds = "Ini adalah Herpes"
+    elif preds == 2:
+        preds = "ini adalah Impetigo"
+    elif preds == 3:
+        preds = "Ini adalah Kurap"
+    elif preds == 4:
+        preds = "Ini adalah Kutil"
+    elif preds == 5:
+        preds = "Ini adalah Melanoma"
+    elif preds == 6:
+        preds = "Ini adalah Psoriasis"
+    elif preds == 7:
+        preds = "Ini adalah Vitiligo"
 
     return preds
+
 
 def solusi_predict(img_path, model):
     img = load_img(img_path, target_size=(150, 150))
@@ -60,15 +62,14 @@ def solusi_predict(img_path, model):
     # Preprocessing the image
     x = img_to_array(img)
     x = np.expand_dims(x, axis=0)
-   
 
     # Be careful how your trained model deals with the input
     # otherwise, it won't make correct prediction!
 
     preds = model.predict(x)
     preds = np.argmax(preds, axis=1)
-    if preds==0:
-        preds="""
+    if preds == 0:
+        preds = """
         <h5>Cara Mengatasi Cacar Air</h5>
         <ul>
             <li>Konsumsi obat penghilang rasa sakit untuk membantu mengurangi demam tinggi dan rasa sakit ketika seseorang menderita cacar air.</li>
@@ -77,9 +78,9 @@ def solusi_predict(img_path, model):
             <li>Untuk menghindari gatal bisa menjadi parah, dengan memakai salep, jangan menggaruk luka dan menjaga kuku tetap bersih. Terakhir gunakan pakaian longgar. </li>
             <li>Dokter mungkin meresepkan obat antivirus selama kehamilan, untuk orang dewasa yang mendapatkan diagnosis dini, untuk bayi baru lahir, dan bagi mereka yang memiliki sistem kekebalan yang lemah. </li>
         </ul>
-        """  
-    elif preds==1:
-        preds="""
+        """
+    elif preds == 1:
+        preds = """
         <h5>Cara Mengatasi Herpes</h5>
         <ul>
             <li>Kompres menggunakan air hangat atau dingin pada bagian yang sering muncul herpes untuk meredakan rasa sakit</li>
@@ -90,8 +91,8 @@ def solusi_predict(img_path, model):
             <li>Gunakan Obat-obatan yang mudah ditemukan di apotek terdekat. Seperti (Betason N Cream, Valtrex Tablet, Zovirax Cream, Acyclovir Cream, Zoter Cream, Virugon Natural Cream)</li>
         </ul>
         """
-    elif preds==2:
-        preds="""
+    elif preds == 2:
+        preds = """
         <h5>Cara Mengatasi Impetigo</h5>
         <ul>
             <li>Merendam luka dengan menggunakan air hangat</li>
@@ -99,8 +100,8 @@ def solusi_predict(img_path, model):
             <li>Apabila impetigo semakin parah dan mulai menyebar ke bagian tubuh lainnya, meminum obat seperti clindamycin atau obat antibiotik golongan sefalosporin</li>
         </ul>
         """
-    elif preds==3:
-        preds="""
+    elif preds == 3:
+        preds = """
         <h5>Cara Mengatasi Kurap</h5>
         <ul>
             <li>Cuci sprei dan pakaian setiap hari selama infeksi untuk membantu membunuh jamur-jamur yang ada di lingkungan Anda</li>
@@ -109,8 +110,8 @@ def solusi_predict(img_path, model):
             <li>Obati semua area yang terinfeksi dengan produk yang mengandung clotrimazole, miconazole, terbinafine, atau bahan terkait lainnya</li>
         </ul>
         """
-    elif preds==4:
-        preds="""
+    elif preds == 4:
+        preds = """
         <h5>Cara Mengatasi Kutil</h5>
         <ul>
             <li>Perawatan dengan nitrogen cair/cryotherapy</li>
@@ -118,8 +119,8 @@ def solusi_predict(img_path, model):
             <li>Perawatan laser</li>
         </ul>
         """
-    elif preds==5:
-        preds="""
+    elif preds == 5:
+        preds = """
         <h5>Cara Mengatasi Melanoma</h5>
         <ul>
             <li>Operasi atau pembedahan jadi pengobatan</li>
@@ -127,8 +128,8 @@ def solusi_predict(img_path, model):
             <li>Kemoterapi</li>
         </ul>
         """
-    elif preds==6:
-        preds="""
+    elif preds == 6:
+        preds = """
         <h5>Cara Mengatasi Psoriasis</h5>
         <ul>
             <li>Mengenal dan menjauhi faktor pemicu gejala psoriasis</li>
@@ -139,8 +140,8 @@ def solusi_predict(img_path, model):
             <li>Menggunakan bahan alami</li>
         </ul>
         """
-    elif preds==7:
-        preds="""
+    elif preds == 7:
+        preds = """
         <h5>Cara Mengatasi Vitiligo</h5>
         <ul>
             <li>Obat yang mengontrol peradangan.</li>
@@ -174,7 +175,7 @@ def upload():
 
         # Make prediction
         preds = model_predict(file_path, model)
-        result=preds
+        result = preds
         return result
     return None
 
@@ -193,10 +194,10 @@ def solusi():
 
         # Make prediction
         preds = solusi_predict(file_path, model)
-        result=preds
+        result = preds
         return result
     return None
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0', port=5000)

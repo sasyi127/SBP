@@ -5,4 +5,3 @@ Pillow
 flask==2.2.2
 Werkzeug
 matplotlib==3.2.2
-cv2==4.6.0

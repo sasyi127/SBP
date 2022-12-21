@@ -1,4 +1,6 @@
 # coding=utf-8
+import streamlit as st
+import streamlit.components.v1 as stc
 import os
 import numpy as np
 
@@ -10,7 +12,7 @@ from keras.utils import load_img
 # Flask utils
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
-from gevent.pywsgi import WSGIServer
+# from gevent.pywsgi import WSGIServer
 
 # Define a flask app
 app = Flask(__name__)
